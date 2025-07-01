@@ -16,3 +16,5 @@ Let's see how far I get lol.
 ## Development
 
 Run `npm run start` to rebuild the bundle.
+
+To hear sounds, you need to disable your Autoplay blocking features.
