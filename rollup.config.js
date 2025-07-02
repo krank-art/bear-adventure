@@ -1,3 +1,4 @@
+import path from 'path';
 import copy from 'rollup-plugin-copy';
 
 export default ({ outputDir }) => {
@@ -11,6 +12,7 @@ export default ({ outputDir }) => {
       copy({
         targets: [
           { src: 'static/*', dest: outputDir },
+          { src: 'graphics/*', dest: path.join(outputDir, "assets") },
         ],
       }),
     ],
