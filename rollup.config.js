@@ -13,6 +13,7 @@ export default ({ outputDir }) => {
         targets: [
           { src: 'static/*', dest: outputDir },
           { src: 'graphics/*', dest: path.join(outputDir, "assets") },
+          { src: 'data/*', dest: path.join(outputDir, "assets") },
         ],
       }),
     ],
