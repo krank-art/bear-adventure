@@ -1,8 +1,8 @@
 import path from 'path';
 import copy from 'rollup-plugin-copy';
 
-export default ({ outputDir }) => {
-  return {
+export default ({ outputDir }) => [
+  {
     input: 'lib/main.js',
     output: {
       file: outputDir + "/bundle.js",
@@ -17,5 +17,12 @@ export default ({ outputDir }) => {
         ],
       }),
     ],
-  }
-};
+  },
+  {
+    input: 'lib/main-tileset-editor.js',
+    output: {
+      file: outputDir + "/tileset-editor.js",
+      format: 'iife',
+    },
+  },
+];

@@ -1,10 +1,12 @@
 import { rollup } from 'rollup';
-import createRollupConfig from './rollup.config.js';
+import createRollupConfigs from './rollup.config.js';
 
 async function build({ outputDir }) {
-  const rollupConfig = await createRollupConfig({ outputDir });
-  const bundle = await rollup(rollupConfig);
-  await bundle.write(rollupConfig.output);
+  const rollupConfigs = await createRollupConfigs({ outputDir });
+  for (const config of rollupConfigs) {
+    const bundle = await rollup(config);
+    await bundle.write(config.output);
+  }
   console.log('Rollup completed successfully.');
 }
 
