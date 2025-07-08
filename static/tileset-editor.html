@@ -41,6 +41,7 @@
     .editor {
       height: 100%;
       flex: 1 1;
+      overflow: auto;
     }
 
     .inspector-nav,
@@ -124,6 +125,33 @@
 
     .spritesheet {
       image-rendering: pixelated;
+      display: none; /* Waits for scaling with JS */
+    }
+
+    .spritesheet-grid {
+      position: relative;
+    }
+
+    .spritesheet-grid .cell {
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      position: absolute;
+      border: 1px solid rgba(255, 0, 0, 0.1);
+    }
+
+    .spritesheet-grid .cell:hover {
+      background-color: rgba(255, 0, 0, 0.2);
+    }
+
+    .spritesheet-grid .cell.active {
+    }
+    .spritesheet-grid .selection {
+      position: absolute;
+      display: none;
+      box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.7);
+      border-radius: 4px;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -175,9 +203,14 @@
         <a class="btn" href="#tiles">Tiles</a>
         <a class="btn active" href="#spritesheet">Spritesheet</a>
       </div>
+      <button id="zoom-in" type="button">+</button>
+      <button id="zoom-out" type="button">&ndash;</button>
+      <span id="zoom-label"></span>
     </nav>
     <main class="editor-body">
-      <img class="spritesheet" src="/assets/spritesheet.png" alt="Spritesheet">
+      <div class="spritesheet-grid">
+        <img class="spritesheet" src="/assets/spritesheet.png" alt="Spritesheet">
+      </div>
     </main>
   </div>
   <script src="/tileset-editor.js"></script>
