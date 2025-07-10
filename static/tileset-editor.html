@@ -108,7 +108,7 @@
       background: #333;
     }
 
-    .btn.active { 
+    .btn.active {
       background-color: #555;
     }
 
@@ -129,8 +129,10 @@
 
     .spritesheet {
       image-rendering: pixelated;
-      display: none; /* Waits for scaling with JS */
-      user-select: none; /* Otherwise when dragging in editor, image gets selected */
+      display: none;
+      /* Waits for scaling with JS */
+      user-select: none;
+      /* Otherwise when dragging in editor, image gets selected */
       pointer-events: none;
     }
 
@@ -149,7 +151,7 @@
     .spritesheet-grid .cell:hover {
       background-color: rgba(255, 0, 0, 0.2);
     }
-    
+
     .spritesheet-grid .row,
     .spritesheet-grid .col {
       display: inline-block;
@@ -170,8 +172,8 @@
       height: 100%;
     }
 
-    .spritesheet-grid .cell.active {
-    }
+    .spritesheet-grid .cell.active {}
+
     .spritesheet-grid .selection {
       position: absolute;
       display: none;
@@ -202,10 +204,18 @@
       display: block;
       font-weight: bold;
     }
-    
+
     .entry-description {
       display: block;
       opacity: 0.7;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.visible {
+      display: block;
     }
   </style>
 </head>
@@ -253,18 +263,24 @@
   <div class="editor">
     <nav class="editor-nav">
       <div class="multi-button">
-        <a class="btn" href="#metatiles">Metatiles</a>
-        <a class="btn" href="#tiles">Tiles</a>
-        <a class="btn active" href="#spritesheet">Spritesheet</a>
+        <a id="meta-tile-button" class="btn" href="#metatiles">Metatiles</a>
+        <a id="single-tile-button" class="btn" href="#tiles">Tiles</a>
+        <a id="spritesheet-button" class="btn active" href="#spritesheet">Spritesheet</a>
       </div>
       <button id="zoom-in" type="button">+</button>
       <button id="zoom-out" type="button">&ndash;</button>
       <span id="zoom-label"></span>
     </nav>
     <main class="editor-body">
-      <div class="spritesheet-grid">
-        <img class="spritesheet" src="/assets/spritesheet.png" alt="Spritesheet">
+      <div id="spritesheet-editor" class="page">
+        <div class="spritesheet-grid">
+          <img class="spritesheet" src="/assets/spritesheet.png" alt="Spritesheet">
+        </div>
       </div>
+      <div id="single-tile-editor" class="page">
+        <div id="tile-list"></div>
+      </div>
+      <div id="meta-tile-editor" class="page"></div>
     </main>
   </div>
   <script src="/tileset-editor.js"></script>
