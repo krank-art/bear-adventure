@@ -217,6 +217,29 @@
     .page.visible {
       display: block;
     }
+
+    #tile-list {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    .tile-entry {
+      width: 10rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .tile-entry:hover {
+      background-color: #222;
+    }
+
+    #preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 15rem;
+      background-color: #080808;
+    }
   </style>
 </head>
 
@@ -224,8 +247,14 @@
   <div class="inspector">
     <nav class="inspector-nav">Menu</nav>
     <main class="inspector-body">
+      <div id="preview"></div>
       <h2>Actions</h2>
-      <button type="button" id="save"></button>
+      <button type="button" id="load">Load tileset</button>
+      <button type="button" id="save">Save tileset</button>
+      <button type="button" id="generate-tiles">Generate tiles</button>
+      <button type="button" id="generate-tiles">Generate shortcodes</button>
+      <button type="button" id="generate-tiles">Create metatile</button>
+      <button type="button" id="generate-tiles">Delete current</button>
       <h2>Tilesets</h2>
       <h2>Properties</h2>
       <dl class="prop-list">
@@ -265,7 +294,7 @@
       <div class="multi-button">
         <a id="meta-tile-button" class="btn" href="#metatiles">Metatiles</a>
         <a id="single-tile-button" class="btn" href="#tiles">Tiles</a>
-        <a id="spritesheet-button" class="btn active" href="#spritesheet">Spritesheet</a>
+        <a id="spritesheet-button" class="btn" href="#spritesheet">Spritesheet</a>
       </div>
       <button id="zoom-in" type="button">+</button>
       <button id="zoom-out" type="button">&ndash;</button>
