@@ -249,6 +249,7 @@
     <main class="inspector-body">
       <div id="preview"></div>
       <h2>Actions</h2>
+      <button type="button" id="create">Create tileset</button>
       <button type="button" id="load">Load tileset</button>
       <button type="button" id="save">Save tileset</button>
       <button type="button" id="generate-tiles">Generate tiles</button>
@@ -256,7 +257,7 @@
       <button type="button" id="create-metatiles">Create metatile</button>
       <button type="button" id="delete">Delete current</button>
       <h2>Tilesets</h2>
-        <span>Default (current)</span>
+      <span>Default (current)</span>
       <h2>Properties</h2>
       <dl class="prop-list" id="property-list">
         <div class="prop-list-row" data-prop-id="type">
@@ -317,6 +318,16 @@
       <div id="meta-tile-editor" class="page"></div>
     </main>
   </div>
+  <dialog id="dialog-tileset-create">
+    <form method="dialog">
+      <h3>Create Tileset</h3>
+      <input type="text" id="image-src" placeholder="/assets/tileset.png" style="width: 100%; margin-bottom: 1rem;" />
+      <menu style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
+        <button type="button" data-dialog-action="close" id="cancel-btn">Cancel</button>
+        <button type="submit" id="create-btn" value="confirm">Create</button>
+      </menu>
+    </form>
+  </dialog>
   <script src="/tileset-editor.js"></script>
 </body>
 
