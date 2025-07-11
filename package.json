@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/krank-art/bear-adventure#readme",
   "devDependencies": {
+    "express": "^5.1.0",
     "rollup": "^4.44.1",
     "rollup-plugin-copy": "^3.5.0"
   }
