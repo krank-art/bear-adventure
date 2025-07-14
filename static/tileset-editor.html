@@ -321,7 +321,10 @@
   <dialog id="dialog-tileset-create">
     <form method="dialog">
       <h3>Create Tileset</h3>
-      <input type="text" id="image-src" placeholder="/assets/tileset.png" style="width: 100%; margin-bottom: 1rem;" />
+      <label for="create-tileset-name">Name</label>
+      <input type="text" id="create-tileset-name" name="tileset-name" placeholder="my-tileset" required/>
+      <label for="create-tileset-image-src">Spritesheet Source</label>
+      <input type="text" id="create-tileset-image-src" name="image-src" placeholder="/assets/tileset.png" required/>
       <menu style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
         <button type="button" data-dialog-action="close" id="cancel-btn">Cancel</button>
         <button type="submit" id="create-btn" value="confirm">Create</button>
