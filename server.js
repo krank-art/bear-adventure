@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { isValidTilesetId } from './lib/tileset.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,11 +21,6 @@ function doesTilesetExist(id) {
   const filepath = path.join(tilesetDir, id + ".json");
   return fs.existsSync(filepath);
 }
-function isValidTilesetId(id) {
-  // There are some extra cases with Windows and Unix with reserved file names (like files musn't start with COM).
-  // But we are lazy for now, if it is necessary I will add a function checking for common filename pitfalls.
-  return /^[a-zA-Z0-9_-]+$/.test(id);
-}
 
 const app = express();
 const PORT = 3001;
@@ -32,6 +28,12 @@ const PORT = 3001;
 // Serve static files from the "dist" folder
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', express.json());
+app.get('/api/tilesets', (req, res) => {
+  const entries = fs.readdirSync(tilesetDir);
+  const jsonFiles = entries.filter(file => file.endsWith('.json'));
+  const tilesetIds = jsonFiles.map(file => path.parse(file).name );
+  res.json(tilesetIds);
+});
 app.get('/api/tilesets/:id', (req, res) => {
   // GET /api/tilesets/:id (read)
   const tilesetId = req.params.id;
