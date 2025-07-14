@@ -5,6 +5,26 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const tilesetDir = path.join(__dirname, 'tilesets');
+
+function loadTileset(id) {
+  const filepath = path.join(tilesetDir, id + ".json");
+  if (!fs.existsSync(filepath)) return null;
+  return JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+}
+function saveTileset(id, data) {
+  const filepath = path.join(tilesetDir, id + ".json");
+  fs.writeFileSync(filepath, JSON.stringify(data));
+}
+function doesTilesetExist(id) {
+  const filepath = path.join(tilesetDir, id + ".json");
+  return fs.existsSync(filepath);
+}
+function isValidTilesetId(id) {
+  // There are some extra cases with Windows and Unix with reserved file names (like files musn't start with COM).
+  // But we are lazy for now, if it is necessary I will add a function checking for common filename pitfalls.
+  return /^[a-zA-Z0-9_-]+$/.test(id);
+}
 
 const app = express();
 const PORT = 3001;
@@ -12,18 +32,28 @@ const PORT = 3001;
 // Serve static files from the "dist" folder
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', express.json());
-
-// Save JSON tileset to disk
-app.post('/api/tilesets', async (req, res) => {
-  const { tileset: tilesetName, data } = req.body;
-  if (!tilesetName || typeof tilesetName !== 'string')
-    return res.status(400).json({ error: 'Missing or invalid "name" field' });
-  if (!data || typeof data !== 'object')
-    return res.status(400).json({ error: 'Missing or invalid "data" field' });
-  const filePath = path.join(__dirname, 'data', `${tilesetName}.json`);
+app.get('/api/tilesets/:id', (req, res) => {
+  // GET /api/tilesets/:id (read)
+  const tilesetId = req.params.id;
+  if (!isValidTilesetId(tilesetId))
+    return res.status(400).json({ error: 'Invalid tileset ID format.' });
+  const tileset = loadTileset(tilesetId);
+  if (!tileset) return res.status(404).json({ error: 'Tileset not found' });
+  res.json(tileset);
+});
+app.put('/api/tilesets/:id', (req, res) => {
+  // PUT /api/tilesets (update)
+  // This also functions as POST (create), because POST would require that no id is specified in API design.
+  // Also the body function for creation and updating in this case is the same, the only way to know if a tileset
+  // was newly created on disk is if the client receives a 201 (Created) status code instead of 200 (OK).
+  const tilesetId = req.params.id;
+  if (!isValidTilesetId(tilesetId))
+    return res.status(400).json({ error: 'Invalid tileset ID format.' });
+  const tilesetData = req.body;
+  const statusCode = doesTilesetExist(tilesetId) ? 200 : 201;
   try {
-    fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
-    res.status(200).json({ message: `Tileset "${tilesetName}" saved successfully` });
+    saveTileset(tilesetId, tilesetData);
+    res.status(statusCode).json({ id: tilesetId, ...tilesetData });
   } catch (err) {
     console.error('File write error:', err);
     res.status(500).json({ error: 'Failed to save tileset' });
