@@ -240,6 +240,24 @@
       height: 15rem;
       background-color: #080808;
     }
+
+    #tileset-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tileset-list-entry {
+      padding: 0 0.5em;
+    }
+
+    .tileset-list-entry.active {
+      background-color: #333;
+    }
+
+    .tileset-list-entry::before {
+      content: "🧩 ";
+    }
   </style>
 </head>
 
@@ -254,10 +272,11 @@
       <button type="button" id="save">Save tileset</button>
       <button type="button" id="generate-tiles">Generate tiles</button>
       <button type="button" id="generate-shortcodes">Generate shortcodes</button>
+      <button type="button" id="show-duplicates">Show duplicates</button>
       <button type="button" id="create-metatiles">Create metatile</button>
       <button type="button" id="delete">Delete current</button>
       <h2>Tilesets</h2>
-      <span>Default (current)</span>
+      <ul id="tileset-list"></ul>
       <h2>Properties</h2>
       <dl class="prop-list" id="property-list">
         <div class="prop-list-row" data-prop-id="type">
@@ -309,7 +328,7 @@
     <main class="editor-body">
       <div id="spritesheet-editor" class="page">
         <div class="spritesheet-grid">
-          <img class="spritesheet" src="/assets/spritesheet.png" alt="Spritesheet">
+          <img class="spritesheet" src="" alt="Spritesheet">
         </div>
       </div>
       <div id="single-tile-editor" class="page">
