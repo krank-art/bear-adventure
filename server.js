@@ -31,8 +31,16 @@ app.use('/api', express.json());
 app.get('/api/tilesets', (req, res) => {
   const entries = fs.readdirSync(tilesetDir);
   const jsonFiles = entries.filter(file => file.endsWith('.json'));
-  const tilesetIds = jsonFiles.map(file => path.parse(file).name );
-  res.json(tilesetIds);
+  const tilesets = jsonFiles.map(file => {
+    const id = path.parse(file).name;
+    const data = loadTileset(id);
+    const tilesLength = data.tiles.length;
+    const metatilesLength = data.metatiles.length;
+    delete data.tiles;
+    delete data.metatiles;
+    return { ...data, metatilesLength, tilesLength };
+  } );
+  res.json(tilesets);
 });
 app.get('/api/tilesets/:id', (req, res) => {
   // GET /api/tilesets/:id (read)
