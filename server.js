@@ -29,6 +29,7 @@ const PORT = 3001;
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', express.json());
 app.get('/api/tilesets', (req, res) => {
+  if (!fs.existsSync(tilesetDir)) fs.mkdirSync(tilesetDir);
   const entries = fs.readdirSync(tilesetDir);
   const jsonFiles = entries.filter(file => file.endsWith('.json'));
   const tilesets = jsonFiles.map(file => {
