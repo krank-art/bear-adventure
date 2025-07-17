@@ -258,6 +258,10 @@
     .tileset-list-entry::before {
       content: "🧩 ";
     }
+
+    .readonly dd {
+      color: #666;
+    }
   </style>
 </head>
 
@@ -283,11 +287,11 @@
           <dt>Type</dt>
           <dd></dd>
         </div>
-        <div class="prop-list-row" data-prop-id="name">
+        <div class="prop-list-row" data-prop-id="name" data-editable="true">
           <dt>Name</dt>
           <dd></dd>
         </div>
-        <div class="prop-list-row" data-prop-id="shortcode">
+        <div class="prop-list-row" data-prop-id="shortcode" data-editable="true">
           <dt>Shortcode</dt>
           <dd></dd>
         </div>
